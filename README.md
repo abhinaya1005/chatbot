@@ -3,5 +3,7 @@ A simple and interactive chatbot designed to provide skincare tips and guidance.
 
 🔹 Features:
 ->Provides basic skincare recommendations
+
 ->Interactive and beginner-friendly chatbot UI
+
 ->Frontend built with HTML, CSS, and JavaScript
