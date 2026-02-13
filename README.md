@@ -1,10 +1,32 @@
-Skincare Chatbot 💬✨
-A simple and interactive chatbot designed to provide skincare tips and guidance. Built using HTML, CSS, and JavaScript, this project demonstrates how conversational interfaces can make skincare advice more engaging and accessible.
+# Gen Z Skincare Chatbot
 
-🔹 Features:
+A lightweight, web-based chatbot designed to provide basic skincare guidance in a Gen Z conversational tone.
 
-->Provides basic skincare recommendations
+## Overview
+This project is a simple front-end chatbot built using HTML, CSS, and JavaScript. It interacts with users through predefined rules and responses to offer general skincare suggestions.
 
-->Interactive and beginner-friendly chatbot UI
+## Features
+- Interactive chat interface
+- Gen Z–style conversational responses
+- Basic skincare recommendations
+- Clean and minimal UI design
 
-->Frontend built with HTML, CSS, and JavaScript
+## Technologies Used
+- HTML
+- CSS
+- JavaScript
+
+## Project Structure
+index.html
+skincare-girl.jpg
+
+
+## Usage
+Open the `index.html` file in any modern web browser to run the chatbot.
+
+## Disclaimer
+This chatbot provides general skincare information and is not a substitute for professional medical advice.
+
+## Author
+Abhinaya
+
