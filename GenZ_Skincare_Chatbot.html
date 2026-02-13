@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gen Z Skincare Chatbot</title>
+<style>
+body {
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+  background: 
+    linear-gradient(rgba(255, 218, 230, 0.6), rgba(255, 240, 245, 0.6)),
+    url('https://i.pinimg.com/736x/9e/4f/0c/9e4f0cb0d818455e9562b4cbc98ac665.jpg') no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.chat-container {
+  background-color: #fff0f8;
+  width: 400px;
+  max-width: 90%;
+  height: 550px;
+  border-radius: 20px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  border: 2px solid #ffb6c1;
+}
+.chat-box {
+  flex: 1;
+  padding: 15px;
+  overflow-y: auto;
+}
+.message {
+  margin: 10px 0;
+  padding: 12px;
+  border-radius: 15px;
+  max-width: 75%;
+  line-height: 1.4;
+  font-size: 15px;
+}
+.user {
+  background-color: #ffe4f1;
+  align-self: flex-end;
+  color: #d63384;
+}
+.bot {
+  background-color: #fff1f8;
+  align-self: flex-start;
+  color: #c71585;
+}
+.input-box {
+  display: flex;
+  border-top: 2px solid #ffc0cb;
+  background-color: #fff0f8;
+}
+.input-box input {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  outline: none;
+  font-size: 16px;
+  background-color: #fff0f8;
+  color: #333;
+}
+.input-box button {
+  padding: 12px 20px;
+  border: none;
+  background-color: #ff69b4;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+.input-box button:hover {
+  background-color: #ff1493;
+}
+.chat-box::-webkit-scrollbar {
+  width: 6px;
+}
+.chat-box::-webkit-scrollbar-thumb {
+  background-color: #ffb6c1;
+  border-radius: 3px;
+}
+</style>
+</head>
+<body>
+
+<div class="chat-container">
+  <div class="chat-box" id="chatBox">
+    <div class="message bot">Heyyy! 👋 I'm your Skincare BFF 😎. Spill the tea on your skin and I'll help ya out!</div>
+  </div>
+  <div class="input-box">
+    <input type="text" id="userInput" placeholder="Type your message..." />
+    <button onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<script>
+const chatBox = document.getElementById('chatBox');
+
+// Gen Z style skincare knowledge base
+const skincareData = [
+  {
+    keywords: ['acne', 'pimple', 'breakout'],
+    suggestions: [
+      "No cap, acne sucks 😩. Cleanse gently twice a day and avoid poking at pimples.",
+      "TBH, popping pimples = bad idea lol. Try salicylic acid-based stuff 🧴.",
+      "Lowkey, consistency is key. Use a gentle routine and your skin will thank you 💖."
+    ],
+    severity: [
+      "Looks chill, just a few breakouts, keep your routine up ✨",
+      "A bit annoying, might wanna check with a derm if it doesn't chill 😅",
+      "Yikes, that’s serious. Def see a dermatologist ASAP! 🚨"
+    ]
+  },
+  {
+    keywords: ['dry', 'moisturizer', 'flaky', 'rough'],
+    suggestions: [
+      "OMG your skin is thirsty 😱. Moisturizer is your BFF, like literally every day 💧",
+      "Hydrate inside and out fam. Water + gentle creams = glow 😌",
+      "Use fragrance-free products, your skin will love it ❤️"
+    ],
+    severity: [
+      "Lowkey dry, but you got this 💪",
+      "Moderate dryness, slather on that cream girl 😎",
+      "Severe dryness, hit up a derm for some pro tips 🩺"
+    ]
+  },
+  {
+    keywords: ['oily', 'greasy', 'shine', 'oil'],
+    suggestions: [
+      "Sksksk, oily vibes 😅. Oil-free moisturizers + gentle wash is the move ✨",
+      "Blotting paper = life saver. Keep your skin fresh af 👌",
+      "Balance is key fam, too much scrubbing = no bueno 🚫"
+    ],
+    severity: [
+      "Slight oiliness, nothing cray 🤌",
+      "Moderate shine, keep it under control with light products 😉",
+      "High oiliness, watch out for breakouts. Derm might help 👀"
+    ]
+  },
+  {
+    keywords: ['sun', 'sunscreen', 'uv', 'sunburn'],
+    suggestions: [
+      "Slap on SPF 30+ ☀️ every day, no excuses lol 😎",
+      "Reapply that sunscreen like a pro every 2-3 hours ⏰",
+      "Wear a cute hat too, fashion + sun protection = win 🏆"
+    ],
+    severity: [
+      "Light sun exposure, chill 💖",
+      "Moderate sun vibes, avoid peak hours 😬",
+      "Bruh that’s a sunburn risk, get some aloe and maybe a derm 🩹"
+    ]
+  }
+];
+
+function sendMessage() {
+  const input = document.getElementById('userInput');
+  const userMessage = input.value.trim();
+  if (!userMessage) return;
+
+  appendMessage(userMessage, 'user');
+  input.value = '';
+
+  setTimeout(() => {
+    const botMessage = getBotResponse(userMessage);
+    appendMessage(botMessage, 'bot');
+  }, 600);
+}
+
+function appendMessage(message, sender) {
+  const msgDiv = document.createElement('div');
+  msgDiv.classList.add('message', sender);
+  msgDiv.textContent = message;
+  chatBox.appendChild(msgDiv);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+function getBotResponse(message) {
+  const lower = message.toLowerCase();
+
+  // Gen Z style simple rules
+  if (lower.includes("oily skin")) {
+      return "Oily skin vibes 😅? Go for a gentle foaming cleanser and oil-free moisturizer 💧✨. Keep that shine in check!";
+  } else if (lower.includes("dry skin")) {
+      return "Dry skin alert 😱! Slap on some moisturizer with hyaluronic acid or ceramides 💖. Hydrate inside and out fam!";
+  } else if (lower.includes("acne")) {
+      return "Acne probs? 😩 Lowkey, salicylic acid or benzoyl peroxide is your BFF 🧴. Don’t pop tho, okay?";
+  } else if (lower.includes("combination skin")) {
+      return "Combo skin? 🫶 Use a deep clarity cleanser and gently exfoliate ✨. Balance is key fam!";
+  } else if (lower.includes("recommend") || lower.includes("product")) {
+      return "Spill the tea ☕, what’s your skin type? Oily, dry, or combo?";
+  } else if (lower.includes("hello") || lower.includes("hi")) {
+      return "Heyyy! 👋 I’m your Skincare BFF 😎. Let’s spill some skin tea!";
+  } else if (lower.includes("thank you")) {
+      return "You got it! 💅 Anytime, bestie!";
+  }
+
+  // Check Gen Z style knowledge base
+  for (let item of skincareData) {
+    for (let key of item.keywords) {
+      if (lower.includes(key)) {
+        const suggestion = item.suggestions[Math.floor(Math.random() * item.suggestions.length)];
+        const severity = item.severity[Math.floor(Math.random() * item.severity.length)];
+        const extraChat = ["BTW, gotta stay consistent tho 😏", "Also, drink water, it’s life 💧", "Keep it cute and chill 💅"];
+        const extra = extraChat[Math.floor(Math.random() * extraChat.length)];
+        return `${suggestion} 💡
+${severity}
+${extra}`;
+      }
+    }
+  }
+
+  const fallback = [
+    "Hmm, spill more tea about your skin? 😅",
+    "IDK about that, give me deets 🫶",
+    "Lowkey confused 😬, tell me more?"
+  ];
+  return fallback[Math.floor(Math.random() * fallback.length)];
+}
+
+document.getElementById('userInput').addEventListener('keypress', function(e) {
+  if (e.key === 'Enter') sendMessage();
+});
+</script>
+
+</body>
+</html>
